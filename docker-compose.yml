@@ -1,0 +1,39 @@
+services:
+    laravel-app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: laravel-app
+        ports:
+            - "8080:80"
+        volumes:
+            - .:/var/www/html
+        depends_on:
+            - laravel-db
+        environment:
+            - DB_HOST=laravel-db
+
+    laravel-db:
+        image: mariadb:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: secret123
+            MYSQL_DATABASE: laravel
+            MYSQL_USER: laravel
+            MYSQL_PASSWORD: secret
+        ports:
+            - "3306:3306"
+        volumes:
+            - laravel-db_data:/var/lib/mysql
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        ports:
+            - "8081:80"
+        environment:
+            - PMA_HOST=laravel-db
+            - PMA_PORT=3306
+        depends_on:
+            - laravel-db
+
+volumes:
+    laravel-db_data:
