@@ -133,7 +133,7 @@ nvm install 22
 # Build Assets
 
 ```sh
-npm install
+npm install --save-dev
 
 # Building
 npm run build
