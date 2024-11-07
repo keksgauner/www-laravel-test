@@ -32,4 +32,10 @@ class ProjectsController extends Controller
 
         return redirect()->route('projects.index')->with('success', 'Project created successfully.');
     }
+
+    public function destroy(Project $project)
+    {
+        $project->delete();
+        return redirect()->route('projects.index')->with('success', 'Project removed successfully.');
+    }
 }
