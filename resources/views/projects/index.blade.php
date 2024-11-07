@@ -11,7 +11,7 @@
             {{ session('success') }}
         </div>
     @endif
-    <h1 class="text-xl">All Projects</h1>
+    <h1 class="text-xl">All Projects (<span id="project-count">Loading...</span>)</h1>
     @if ($projects->isEmpty())
         <p>No projects found.</p>
     @else
@@ -36,4 +36,14 @@
             @endforeach
         </ul>
     @endif
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('{{ route('projects.count') }}')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('project-count').textContent = data.count;
+                });
+        });
+    </script>
 @endsection

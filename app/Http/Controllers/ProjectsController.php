@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use Illuminate\Support\Facades\Cache;
 
 class ProjectsController extends Controller
 {
@@ -11,6 +12,16 @@ class ProjectsController extends Controller
     {
         $projects = Project::all();
         return view('projects.index', compact('projects'));
+    }
+
+    public function getProjectCount()
+    {
+        $projectCount = Cache::remember('project_count', 60, function () {
+            sleep(5);
+            return Project::count();
+        });
+
+        return response()->json(['count' => $projectCount]);
     }
 
     public function create()
@@ -29,6 +40,8 @@ class ProjectsController extends Controller
             'name' => $request->name,
             'description' => $request->description,
         ]);
+
+        Cache::forget('project_count');
 
         return redirect()->route('projects.index')->with('success', 'Project created successfully.');
     }
@@ -56,6 +69,9 @@ class ProjectsController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
+
+        Cache::forget('project_count');
+
         return redirect()->route('projects.index')->with('success', 'Project removed successfully.');
     }
 }

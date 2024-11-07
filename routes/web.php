@@ -14,4 +14,5 @@ Route::prefix('projects')->group(function () {
     Route::get('/{project}/edit', [ProjectsController::class, 'edit'])->name('projects.edit');
     Route::put('/{project}', [ProjectsController::class, 'update'])->name('projects.update');
     Route::delete('/{project}', [ProjectsController::class, 'destroy'])->name('projects.destroy');
+    Route::get('/projects/count', [ProjectsController::class, 'getProjectCount'])->name('projects.count');
 });
