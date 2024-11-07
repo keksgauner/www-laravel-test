@@ -7,6 +7,10 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::get('/calculator', function () {
+    return view('calculator');
+})->name('calculator');
+
 Route::prefix('projects')->group(function () {
     Route::get('/', [ProjectsController::class, 'index'])->name('projects.index');
     Route::get('/create', [ProjectsController::class, 'create'])->name('projects.create');

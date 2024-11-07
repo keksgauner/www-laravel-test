@@ -14,6 +14,7 @@
             <a href="{{ route('home') }}" class="text-xl">My Website</a>
             <nav>
                 <a href="{{ route('home') }}" class="mr-4 hover:text-gray-400">Home</a>
+                <a href="{{ route('calculator') }}" class="mr-4 hover:text-gray-400">Calculator</a>
                 <a href="{{ route('projects.index') }}" class="mr-4 hover:text-gray-400">View Projects</a>
             </nav>
         </div>
