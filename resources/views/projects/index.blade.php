@@ -39,11 +39,22 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('{{ route('projects.count') }}')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('project-count').textContent = data.count;
-                });
+            function updateProjectCount() {
+                fetch('{{ route('projects.count') }}')
+                    .then(response => response.json())
+                    .then(data => {
+                        const projectCountElement = document.getElementById('project-count');
+                        const currentCount = parseInt(projectCountElement.textContent);
+                        if (currentCount !== data.count) {
+                            location.reload();
+                        } else {
+                            projectCountElement.textContent = data.count;
+                        }
+                    });
+            }
+
+            updateProjectCount();
+            setInterval(updateProjectCount, 30000);
         });
     </script>
 @endsection
