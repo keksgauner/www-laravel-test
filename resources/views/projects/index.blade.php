@@ -3,10 +3,10 @@
 @section('title', 'Index Page')
 
 @section('content')
-    <h1>Projects</h1>
+    <h1>All Projects</h1>
     <a href="{{ route('projects.create') }}">Create Project</a>
     @if (session('success'))
-        <div class="alert alert-success">
+        <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50" role="alert">
             {{ session('success') }}
         </div>
     @endif
