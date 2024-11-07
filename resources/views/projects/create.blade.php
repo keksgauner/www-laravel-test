@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <form action="{{ route('projects.store') }}" method="POST" class="max-w-sm mx-auto">
+    <form action="{{ route('projects.store') }}" method="POST">
         @csrf
         <div>
             <label for="name">Project Name:</label>
