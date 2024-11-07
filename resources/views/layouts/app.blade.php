@@ -13,13 +13,14 @@
         <div class="container mx-auto flex justify-between items-center">
             <a href="{{ route('home') }}" class="text-xl">My Website</a>
             <nav>
-                <a href="{{ route('home') }}" class="mr-4">Home</a>
-                <a href="{{ route('projects.index') }}" class="mr-4">View Projects</a>
+                <a href="{{ route('home') }}" class="mr-4 hover:text-gray-400">Home</a>
+                <a href="{{ route('projects.index') }}" class="mr-4 hover:text-gray-400">View Projects</a>
             </nav>
         </div>
     </header>
 
     <main class="flex-grow pt-16">
+        <h1 class="mx-auto text-center text-3xl">@yield('title', 'Default Title')</h1>
         <div class="container mx-auto p-4">
             @yield('content')
         </div>
