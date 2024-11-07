@@ -18,12 +18,11 @@
         <div>
             <label for="name">Project Name:</label>
             <input type="text" id="name" name="name" value="{{ old('name') }}" required
-                class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                class="w-full p-2 border border-gray-300 rounded">
         </div>
         <div>
             <label for="description">Description:</label>
-            <textarea id="description" name="description"
-                class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">{{ old('description') }}</textarea>
+            <textarea id="description" name="description" class="w-full p-2 border border-gray-300 rounded">{{ old('description') }}</textarea>
         </div>
         <div>
             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">Create

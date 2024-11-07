@@ -19,15 +19,19 @@
             @foreach ($projects as $project)
                 <li class="flex justify-between items-center">
                     <span>{{ $project->name }}: {{ $project->description }}</span>
-                    <form action="{{ route('projects.destroy', $project) }}" method="POST"
-                        onsubmit="return confirm('Are you sure you want to delete this project?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit"
-                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 my-1 px-2 rounded">
-                            Remove
-                        </button>
-                    </form>
+                    <div class="flex justify-between items-center">
+                        <a href="{{ route('projects.edit', $project) }}"
+                            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded m-1">Edit</a>
+                        <form action="{{ route('projects.destroy', $project) }}" method="POST"
+                            onsubmit="return confirm('Are you sure you want to delete this project?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 m-1 px-2 rounded">
+                                Remove
+                            </button>
+                        </form>
+                    </div>
                 </li>
             @endforeach
         </ul>
