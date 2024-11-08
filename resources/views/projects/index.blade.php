@@ -96,6 +96,35 @@
             document.addEventListener('mouseleave', function() {
                 isDragging = false;
             });
+
+            // Touch events for mobile
+            document.addEventListener('touchstart', function(event) {
+                startX = event.touches[0].clientX;
+                isDragging = true;
+            });
+
+            document.addEventListener('touchmove', function(event) {
+                if (isDragging) {
+                    const currentX = event.touches[0].clientX;
+                    const diffX = currentX - startX;
+
+                    if (diffX < -100) { // Threshold for left swipe
+                        isDragging = false;
+                        window.location.href = '{{ route('home') }}';
+                    } else if (diffX > 100) { // Threshold for right swipe
+                        isDragging = false;
+                        window.location.href = '{{ route('calculator') }}';
+                    }
+                }
+            });
+
+            document.addEventListener('touchend', function() {
+                isDragging = false;
+            });
+
+            document.addEventListener('touchcancel', function() {
+                isDragging = false;
+            });
         });
     </script>
 @endsection
