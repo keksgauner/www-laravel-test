@@ -13,9 +13,13 @@
         <div class="container mx-auto flex justify-between items-center">
             <a href="{{ route('home') }}" class="text-xl">My Website</a>
             <nav>
-                <a href="{{ route('home') }}" class="mr-4 hover:text-gray-400">Home</a>
-                <a href="{{ route('calculator') }}" class="mr-4 hover:text-gray-400">Calculator</a>
-                <a href="{{ route('projects.index') }}" class="mr-4 hover:text-gray-400">View Projects</a>
+                <a href="{{ route('home') }}"
+                    class="mr-4 hover:text-gray-400 {{ request()->routeIs('home') ? 'text-blue-500' : '' }}">Home</a>
+                <a href="{{ route('calculator') }}"
+                    class="mr-4 hover:text-gray-400 {{ request()->routeIs('calculator') ? 'text-blue-500' : '' }}">Calculator</a>
+                <a href="{{ route('projects.index') }}"
+                    class="mr-4 hover:text-gray-400 {{ request()->routeIs('projects.index') ? 'text-blue-500' : '' }}">View
+                    Projects</a>
             </nav>
         </div>
     </header>
