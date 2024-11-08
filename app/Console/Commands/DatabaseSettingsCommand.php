@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Dotenv\Dotenv;
+use Dotenv\Exception\InvalidPathException;
 
 class DatabaseSettingsCommand extends Command
 {
@@ -24,6 +26,13 @@ class DatabaseSettingsCommand extends Command
      * @var string
      */
     protected $description = 'Configure database settings for the Panel.';
+
+    /**
+     * The variables to store environment settings.
+     *
+     * @var array
+     */
+    protected $variables = [];
 
     /**
      * Execute the console command.
@@ -61,5 +70,40 @@ class DatabaseSettingsCommand extends Command
         if ($askForMySQLPassword) {
             $this->variables['DB_PASSWORD'] = $this->option('password') ?? $this->secret('Database Password');
         }
+
+        $this->updateEnvFile($this->variables);
+
+        $this->output->success('Database settings have been configured successfully.');
+    }
+
+    /**
+     * Update the .env file with the given variables.
+     *
+     * @param array $variables
+     */
+    protected function updateEnvFile(array $variables)
+    {
+        try {
+            $dotenv = Dotenv::createImmutable(base_path());
+            $env = $dotenv->load();
+        } catch (InvalidPathException $e) {
+            $env = [];
+        }
+
+        $envFilePath = base_path('.env');
+        $envContent = file_exists($envFilePath) ? file_get_contents($envFilePath) : '';
+
+        foreach ($variables as $key => $value) {
+            $pattern = "/^{$key}=.*/m";
+            $replacement = "{$key}={$value}";
+
+            if (preg_match($pattern, $envContent)) {
+                $envContent = preg_replace($pattern, $replacement, $envContent);
+            } else {
+                $envContent .= "\n{$replacement}";
+            }
+        }
+
+        file_put_contents($envFilePath, $envContent);
     }
 }

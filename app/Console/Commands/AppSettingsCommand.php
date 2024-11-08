@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Dotenv\Dotenv;
+use Dotenv\Exception\InvalidPathException;
 
 class AppSettingsCommand extends Command
 {
@@ -22,6 +24,13 @@ class AppSettingsCommand extends Command
     protected $description = 'Configure basic environment settings for the Panel.';
 
     /**
+     * The variables to store environment settings.
+     *
+     * @var array
+     */
+    protected $variables = [];
+
+    /**
      * Execute the console command.
      */
     public function handle()
@@ -31,5 +40,40 @@ class AppSettingsCommand extends Command
             'Application URL',
             config('app.url', 'https://example.com')
         );
+
+        $this->updateEnvFile($this->variables);
+
+        $this->output->success("The Setup has been completed successfully.");
+    }
+
+    /**
+     * Update the .env file with the given variables.
+     *
+     * @param array $variables
+     */
+    protected function updateEnvFile(array $variables)
+    {
+        try {
+            $dotenv = Dotenv::createImmutable(base_path());
+            $env = $dotenv->load();
+        } catch (InvalidPathException $e) {
+            $env = [];
+        }
+
+        $envFilePath = base_path('.env');
+        $envContent = file_exists($envFilePath) ? file_get_contents($envFilePath) : '';
+
+        foreach ($variables as $key => $value) {
+            $pattern = "/^{$key}=.*/m";
+            $replacement = "{$key}={$value}";
+
+            if (preg_match($pattern, $envContent)) {
+                $envContent = preg_replace($pattern, $replacement, $envContent);
+            } else {
+                $envContent .= "\n{$replacement}";
+            }
+        }
+
+        file_put_contents($envFilePath, $envContent);
     }
 }
