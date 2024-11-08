@@ -46,11 +46,8 @@ php artisan key:generate --force
 # Database Setup
 
 ```sh
-# Only run the command below if you are installing this Panel for
-# the first time and do not have any data in the database.
-php artisan migrate:fresh --seed --force
+php artisan p:environment:database
 
-# Use this insteed
 php artisan migrate --force
 ```
 
@@ -158,8 +155,9 @@ You need to do [Database Setup]
 # To start and rebuild
 docker compose up -d --build
 
-# Database migrate once
-php artisan migrate --seed --force
+# Only run the command below if you are installing this Panel for
+# the first time and do not have any data in the database.
+php artisan migrate:fresh --seed --force
 
 # If the permission is denied
 chmod -R 777 ./storage ./bootstrap/cache

@@ -6,3 +6,40 @@
     <h1>Welcome to my website</h1>
     <p>This is the content of the welcome page.</p>
 @endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let startX;
+            let isDragging = false;
+
+            document.addEventListener('mousedown', function(event) {
+                startX = event.clientX;
+                isDragging = true;
+            });
+
+            document.addEventListener('mousemove', function(event) {
+                if (isDragging) {
+                    const currentX = event.clientX;
+                    const diffX = currentX - startX;
+
+                    if (diffX < -100) { // Threshold for left swipe
+                        isDragging = false;
+                        window.location.href = '{{ route('calculator') }}';
+                    } else if (diffX > 100) { // Threshold for right swipe
+                        isDragging = false;
+                        window.location.href = '{{ route('projects.index') }}';
+                    }
+                }
+            });
+
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+            });
+
+            document.addEventListener('mouseleave', function() {
+                isDragging = false;
+            });
+        });
+    </script>
+@endsection

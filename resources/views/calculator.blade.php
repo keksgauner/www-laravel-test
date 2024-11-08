@@ -31,6 +31,9 @@
                 </div>
             </div>
         </div>
+    @endsection
+
+    @section('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const buttons = document.querySelectorAll('button');
@@ -49,5 +52,38 @@
                 });
             });
         </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let startX;
+                let isDragging = false;
 
+                document.addEventListener('mousedown', function(event) {
+                    startX = event.clientX;
+                    isDragging = true;
+                });
+
+                document.addEventListener('mousemove', function(event) {
+                    if (isDragging) {
+                        const currentX = event.clientX;
+                        const diffX = currentX - startX;
+
+                        if (diffX < -100) { // Threshold for left swipe
+                            isDragging = false;
+                            window.location.href = '{{ route('projects.index') }}';
+                        } else if (diffX > 100) { // Threshold for right swipe
+                            isDragging = false;
+                            window.location.href = '{{ route('home') }}';
+                        }
+                    }
+                });
+
+                document.addEventListener('mouseup', function() {
+                    isDragging = false;
+                });
+
+                document.addEventListener('mouseleave', function() {
+                    isDragging = false;
+                });
+            });
+        </script>
     @endsection
