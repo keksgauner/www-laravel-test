@@ -49,6 +49,9 @@ php artisan key:generate --force
 # Only run the command below if you are installing this Panel for
 # the first time and do not have any data in the database.
 php artisan migrate:fresh --seed --force
+
+# Use this insteed
+php artisan migrate --force
 ```
 
 # Nginx snippet
